@@ -2,7 +2,7 @@
 	"name": "ABS_CSV_SweetTreats",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "adfbyexamplesa",
+			"referenceName": "AdfByExampleSa02",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
