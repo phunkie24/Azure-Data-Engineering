@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ADdfByExample'"
 		},
+		"AdfByExampleSa02_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AdfByExampleSa02'"
+		},
 		"adfbyexamplesa_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'adfbyexamplesa'"
@@ -26,6 +30,10 @@
 		"ADdfByExample_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "mydb01"
+		},
+		"AdfByExampleSa02_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://snapseqdls05.dfs.core.windows.net/"
 		},
 		"adfbyexamplesa_properties_typeProperties_url": {
 			"type": "string",
@@ -61,6 +69,9 @@
 					"ADdfByExample_password": {
 						"value": "[parameters('ADdfByExample_password')]"
 					},
+					"AdfByExampleSa02_accountKey": {
+						"value": "[parameters('AdfByExampleSa02_accountKey')]"
+					},
 					"adfbyexamplesa_accountKey": {
 						"value": "[parameters('adfbyexamplesa_accountKey')]"
 					},
@@ -72,6 +83,9 @@
 					},
 					"ADdfByExample_properties_typeProperties_userName": {
 						"value": "[parameters('ADdfByExample_properties_typeProperties_userName')]"
+					},
+					"AdfByExampleSa02_properties_typeProperties_url": {
+						"value": "[parameters('AdfByExampleSa02_properties_typeProperties_url')]"
 					},
 					"adfbyexamplesa_properties_typeProperties_url": {
 						"value": "[parameters('adfbyexamplesa_properties_typeProperties_url')]"

@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ADdfByExample'"
 		},
+		"AdfByExampleSa02_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AdfByExampleSa02'"
+		},
 		"adfbyexamplesa_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'adfbyexamplesa'"
@@ -26,6 +30,10 @@
 		"ADdfByExample_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "mydb01"
+		},
+		"AdfByExampleSa02_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://snapseqdls05.dfs.core.windows.net/"
 		},
 		"adfbyexamplesa_properties_typeProperties_url": {
 			"type": "string",
@@ -60,6 +68,23 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AdfByExampleSa02')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AdfByExampleSa02_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AdfByExampleSa02_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/adfbyexamplesa')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -82,7 +107,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "adfbyexamplesa",
+					"referenceName": "AdfByExampleSa02",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
@@ -126,7 +151,7 @@
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/adfbyexamplesa')]"
+				"[concat(variables('factoryId'), '/linkedServices/AdfByExampleSa02')]"
 			]
 		},
 		{
@@ -334,6 +359,8 @@
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,
+									"wildcardFolderPath": "azure-data-factory-by-example-main/SampleData/SweetTreats",
+									"wildcardFileName": "*",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {

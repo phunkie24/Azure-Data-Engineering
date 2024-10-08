@@ -8,6 +8,9 @@
 		"ADdfByExample_password": {
 			"value": ""
 		},
+		"AdfByExampleSa02_accountKey": {
+			"value": ""
+		},
 		"adfbyexamplesa_accountKey": {
 			"value": ""
 		},
@@ -19,6 +22,9 @@
 		},
 		"ADdfByExample_properties_typeProperties_userName": {
 			"value": "mydb01"
+		},
+		"AdfByExampleSa02_properties_typeProperties_url": {
+			"value": "https://snapseqdls05.dfs.core.windows.net/"
 		},
 		"adfbyexamplesa_properties_typeProperties_url": {
 			"value": "https://snapseqdls05.dfs.core.windows.net/"
