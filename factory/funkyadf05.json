@@ -1,0 +1,9 @@
+{
+	"name": "funkyadf05",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3372e98f-6195-404d-9535-e253336bd17f",
+		"tenantId": "104704fd-f711-4575-99d5-8a6588951c90"
+	}
+}
