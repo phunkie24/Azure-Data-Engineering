@@ -5,8 +5,20 @@
 		"factoryName": {
 			"value": "funkyadf05"
 		},
+		"ADdfByExample_password": {
+			"value": ""
+		},
 		"adfbyexamplesa_accountKey": {
 			"value": ""
+		},
+		"ADdfByExample_properties_typeProperties_server": {
+			"value": "migserever02.database.windows.net"
+		},
+		"ADdfByExample_properties_typeProperties_database": {
+			"value": "AdfByExample"
+		},
+		"ADdfByExample_properties_typeProperties_userName": {
+			"value": "mydb01"
 		},
 		"adfbyexamplesa_properties_typeProperties_url": {
 			"value": "https://snapseqdls05.dfs.core.windows.net/"

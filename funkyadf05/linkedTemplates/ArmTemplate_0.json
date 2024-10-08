@@ -7,9 +7,25 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "funkyadf05"
 		},
+		"ADdfByExample_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ADdfByExample'"
+		},
 		"adfbyexamplesa_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'adfbyexamplesa'"
+		},
+		"ADdfByExample_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "migserever02.database.windows.net"
+		},
+		"ADdfByExample_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdfByExample"
+		},
+		"ADdfByExample_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "mydb01"
 		},
 		"adfbyexamplesa_properties_typeProperties_url": {
 			"type": "string",
@@ -20,6 +36,29 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ADdfByExample')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Database ADFByExample-SQL",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ADdfByExample_properties_typeProperties_server')]",
+					"database": "[parameters('ADdfByExample_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ADdfByExample_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ADdfByExample_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/adfbyexamplesa')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -36,6 +75,116 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ABS_CSV_SweetTreats')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "adfbyexamplesa",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Chapter3"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Sales.csv",
+						"folderPath": "azure-data-factory-by-example-main/SampleData/SweetTreats/Apr-20",
+						"fileSystem": "sampledata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "SalesMonth",
+						"type": "String"
+					},
+					{
+						"name": "Retailer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "SalesValueUSD",
+						"type": "String"
+					},
+					{
+						"name": "UnitsSold",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/adfbyexamplesa')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ASQL_dboSalesLoad')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADdfByExample",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Chapter3"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "RowId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Retailer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesMonth",
+						"type": "date"
+					},
+					{
+						"name": "Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ManufacturerProductCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesValueUSD",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "UnitsSold",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Sales_LOAD"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADdfByExample')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DestinationDataset_mwl')]",
@@ -159,6 +308,80 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SourceDataset_mwl')]",
 				"[concat(variables('factoryId'), '/datasets/DestinationDataset_mwl')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ImportSweetTreatsSales')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Import Sales Data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ABS_CSV_SweetTreats",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ASQL_dboSalesLoad",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Chapter3"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ABS_CSV_SweetTreats')]",
+				"[concat(variables('factoryId'), '/datasets/ASQL_dboSalesLoad')]"
 			]
 		}
 	]
