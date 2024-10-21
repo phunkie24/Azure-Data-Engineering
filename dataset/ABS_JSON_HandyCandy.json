@@ -13,8 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "00816cd4-0d98-4505-8b8f-8b3ba08aab31.json",
-				"folderPath": "azure-data-factory-by-example-main/SampleData/HandyCandy",
+				"fileName": "0210ae58-3f9d-47f6-85d0-4b49153afd36.json",
+				"folderPath": "azure-data-factory-by-example-main/SampleData/HandyCandy/Subset1/Subset2",
 				"fileSystem": "sampledata"
 			}
 		},
