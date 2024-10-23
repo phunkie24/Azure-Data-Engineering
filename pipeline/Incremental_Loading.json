@@ -110,7 +110,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT MAX(LastModifiedTime) AS NewWatermarkValue FROM\nFactTrips;",
+						"sqlReaderQuery": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
