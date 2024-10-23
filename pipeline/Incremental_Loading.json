@@ -87,13 +87,13 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "PreviousWatermark",
+						"activity": "NewWatermark",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					},
 					{
-						"activity": "NewWatermark",
+						"activity": "PreviousWatermark",
 						"dependencyConditions": [
 							"Succeeded"
 						]
