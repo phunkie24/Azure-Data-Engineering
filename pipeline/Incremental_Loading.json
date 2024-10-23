@@ -41,7 +41,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT MAX(LastModifiedTime) AS NewWatermarkValue FROM\nFactTrips;",
+						"sqlReaderQuery": "SELECT MAX(LastModifiedTime) AS NewWatermarkValue FROM\nFactSales;",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
