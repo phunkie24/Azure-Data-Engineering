@@ -1,0 +1,24 @@
+{
+	"name": "Run_Increments",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Incremental_Loading",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2024-10-23T16:30:00",
+				"timeZone": "W. Central Africa Standard Time"
+			}
+		}
+	}
+}
