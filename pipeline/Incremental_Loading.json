@@ -67,7 +67,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
+							"value": "SELECT * FROM FactSaless WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
