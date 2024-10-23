@@ -66,7 +66,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
+						"sqlReaderQuery": {
+							"value": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -75,6 +78,66 @@
 				"inputs": [
 					{
 						"referenceName": "FactTrSalesAzreSQL",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Incremental_Copy_02",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "PreviousWatermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "NewWatermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FactTrSalesAzreSQL",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Factsales_Amoo",
 						"type": "DatasetReference"
 					}
 				]
