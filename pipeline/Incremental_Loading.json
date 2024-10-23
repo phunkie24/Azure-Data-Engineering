@@ -126,11 +126,9 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
-						"writeBehavior": "upsert",
-						"upsertSettings": {
-							"useTempDB": true
-						},
+						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
