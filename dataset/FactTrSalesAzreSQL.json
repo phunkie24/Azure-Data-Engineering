@@ -5,6 +5,9 @@
 			"referenceName": "Incremental_SQL_Link",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Increment"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [

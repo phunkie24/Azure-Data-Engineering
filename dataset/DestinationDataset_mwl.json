@@ -5,6 +5,9 @@
 			"referenceName": "adfbyexamplesa",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Increment"
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {

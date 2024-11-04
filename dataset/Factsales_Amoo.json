@@ -5,6 +5,9 @@
 			"referenceName": "Incremental_Loding_Amoo",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Increment"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
