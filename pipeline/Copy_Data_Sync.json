@@ -1,0 +1,9 @@
+{
+	"name": "Copy_Data_Sync",
+	"properties": {
+		"folder": {
+			"name": "DataSyncPipe"
+		},
+		"annotations": []
+	}
+}
