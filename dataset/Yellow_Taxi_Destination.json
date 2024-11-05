@@ -1,0 +1,22 @@
+{
+	"name": "Yellow_Taxi_Destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DataSync"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "yellowtaxi"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
