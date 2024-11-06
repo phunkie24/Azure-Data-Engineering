@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CopyPipeline_Sync",
+				"name": "CopyPipeline_Syncing",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"policy": {
@@ -12,7 +12,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "CopyPipeline_Sync",
+						"referenceName": "CopyPipeline_Syncing",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
