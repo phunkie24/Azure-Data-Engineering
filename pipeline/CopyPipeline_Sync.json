@@ -72,6 +72,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "DataSyncPipe"
+		},
 		"annotations": []
 	}
 }
