@@ -1,0 +1,24 @@
+{
+	"name": "Trigger_zp1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_Syncing",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 10,
+				"startTime": "2024-11-06T08:15:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
