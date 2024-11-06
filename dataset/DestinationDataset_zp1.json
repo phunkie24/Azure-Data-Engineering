@@ -1,0 +1,19 @@
+{
+	"name": "DestinationDataset_zp1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "YellowTAxi_Sink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "yellowtaxi"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": []
+	}
+}
