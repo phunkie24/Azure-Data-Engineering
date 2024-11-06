@@ -19,10 +19,6 @@
 						"type": "AzureSqlSource",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "Incremental_Dataset",
-						"type": "DatasetReference"
 					}
 				}
 			},
@@ -44,10 +40,6 @@
 						"sqlReaderQuery": "SELECT MAX(LastModifiedTime) AS NewWatermarkValue FROM\nFactSales;",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "FactTrSalesAzreSQL",
-						"type": "DatasetReference"
 					}
 				}
 			},
@@ -78,28 +70,8 @@
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "FactTrSalesAzreSQL",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Factsales_Amoo",
-						"type": "DatasetReference"
-					}
-				]
+					"enableStaging": false
+				}
 			},
 			{
 				"name": "Incremental_Copy_02",
@@ -138,40 +110,26 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
+						"sqlReaderQuery": {
+							"value": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
+						"preCopyScript": {
+							"value": "SELECT * FROM FactTrips WHERE\nLastModifiedTime > '@{activity('PreviousWatermark').\noutput.firstRow.WatermarkValue}'\nAND\nLastModifiedTime <= '@{activity('NewWatermark').output.\nfirstRow.WatermarkValue}';",
+							"type": "Expression"
+						},
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "FactTrSalesAzreSQL",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Factsales_Amoo",
-						"type": "DatasetReference"
-					}
-				]
+					"enableStaging": false
+				}
 			}
 		],
 		"folder": {
