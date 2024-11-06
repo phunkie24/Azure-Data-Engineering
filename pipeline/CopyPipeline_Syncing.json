@@ -61,30 +61,13 @@
 							},
 							"path": "yellowtaxi"
 						}
-					},
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
 					}
-				},
-				"inputs": [
-					{
-						"referenceName": "SourceDataset_zp1",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DestinationDataset_zp1",
-						"type": "DatasetReference"
-					}
-				]
+				}
 			}
 		],
+		"folder": {
+			"name": "DataSyncingPipeline"
+		},
 		"annotations": []
 	}
 }
