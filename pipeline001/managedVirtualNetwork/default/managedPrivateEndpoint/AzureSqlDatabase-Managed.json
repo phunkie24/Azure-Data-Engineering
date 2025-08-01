@@ -1,0 +1,10 @@
+{
+	"name": "AzureSqlDatabase-Managed",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/069554c3-67b8-439f-8b95-4cefdc426bb3/resourceGroups/edw-demo-002/providers/Microsoft.Sql/servers/azuresql-playground",
+		"groupId": "sqlServer",
+		"fqdns": [
+			"azuresql-playground.database.windows.net"
+		]
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"name": "adf-playground-002",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d10b4c3d-9574-48a3-bd4b-b16c4fbdea61",
+		"tenantId": "58a0eaa7-474f-43bd-b169-a99e4e629dba"
+	}
+}
